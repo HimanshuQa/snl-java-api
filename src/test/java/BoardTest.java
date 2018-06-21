@@ -40,9 +40,9 @@ public class BoardTest {
         return board.deletePlayer(null);
     }
 
-    public void add_user(String name, Boolean add_i) throws PlayerExistsException, GameInProgressException, UnsupportedEncodingException, MaxPlayersReachedExeption, IOException {
+    public void add_user(String name, Boolean change_name) throws PlayerExistsException, GameInProgressException, UnsupportedEncodingException, MaxPlayersReachedExeption, IOException {
         int before_player_count, after_player_count;
-        if (add_i) {
+        if (change_name) {
             for (int i = 0; i < 6; i++) {
                 before_player_count = board.getData().getJSONArray("players").length();
                 board.registerPlayer(name + i);

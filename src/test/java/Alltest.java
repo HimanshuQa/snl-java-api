@@ -49,6 +49,9 @@ public class Alltest {
     public void test_add_same_name_user() throws PlayerExistsException, GameInProgressException, MaxPlayersReachedExeption, IOException {
         boardtest.add_same_name_user();
     }
+    
+    
+    
     @AfterMethod
     public void teardown() {
         boardtest = null;

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="5" passed="5">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="31" started-at="2018-06-21T07:13:03Z" finished-at="2018-06-21T07:13:03Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="31" started-at="2018-06-21T07:13:03Z" finished-at="2018-06-21T07:13:03Z">
+      <class name="ExceptionTest">
+        <test-method status="PASS" signature="initialise()[pri:0, instance:ExceptionTest@6ea12c19]" name="initialise" is-config="true" duration-ms="7" started-at="2018-06-21T12:43:03Z" finished-at="2018-06-21T12:43:03Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initialise -->
+        <test-method status="PASS" signature="test_GameInProgressException()[pri:0, instance:ExceptionTest@6ea12c19]" name="test_GameInProgressException" duration-ms="5" started-at="2018-06-21T12:43:03Z" finished-at="2018-06-21T12:43:03Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- test_GameInProgressException -->
+        <test-method status="PASS" signature="test_InvalidTurnException()[pri:0, instance:ExceptionTest@6ea12c19]" name="test_InvalidTurnException" duration-ms="1" started-at="2018-06-21T12:43:03Z" finished-at="2018-06-21T12:43:03Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- test_InvalidTurnException -->
+        <test-method status="PASS" signature="test_NoUserWithSuchUUIDException()[pri:0, instance:ExceptionTest@6ea12c19]" name="test_NoUserWithSuchUUIDException" duration-ms="1" started-at="2018-06-21T12:43:03Z" finished-at="2018-06-21T12:43:03Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- test_NoUserWithSuchUUIDException -->
+        <test-method status="PASS" signature="test_PlayerExistsException()[pri:0, instance:ExceptionTest@6ea12c19]" name="test_PlayerExistsException" duration-ms="1" started-at="2018-06-21T12:43:03Z" finished-at="2018-06-21T12:43:03Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- test_PlayerExistsException -->
+        <test-method status="PASS" signature="test_maxPlayersReachedException()[pri:0, instance:ExceptionTest@6ea12c19]" name="test_maxPlayersReachedException" duration-ms="0" started-at="2018-06-21T12:43:03Z" finished-at="2018-06-21T12:43:03Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- test_maxPlayersReachedException -->
+      </class> <!-- ExceptionTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
