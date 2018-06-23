@@ -35,7 +35,7 @@ public class Alltest {
         boardtest.roll_dice_without_registering_any_user();
     }
 
-    @Test(expectedExceptions = {NullPointerException.class})
+    @Test(expectedExceptions = {NoUserWithSuchUUIDException.class})
     public void test_delete_user_without_registering_anybody() throws NoUserWithSuchUUIDException, FileNotFoundException, UnsupportedEncodingException {
         boardtest.delete_user_without_registering_anybody();
     }
@@ -50,7 +50,20 @@ public class Alltest {
         boardtest.add_same_name_user();
     }
     
+    @Test
+    public void test_register_user_after_starting_game(){
+        boardtest.register_user_after_starting_game();
+    }
     
+    @Test
+    public void test_delete_user_which_does_not_exist(){
+        boardtest.delete_user_which_does_not_exist();
+    }
+    
+    @Test
+    public void test_check_user_is_deleted(){
+        boardtest.check_user_is_deleted();
+    }
     
     @AfterMethod
     public void teardown() {

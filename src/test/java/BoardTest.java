@@ -8,6 +8,7 @@ import com.qainfotech.tap.training.snl.api.PlayerExistsException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.UUID;
 import org.testng.annotations.Test;
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -37,27 +38,33 @@ public class BoardTest {
     }
 
     public JSONArray delete_user_without_registering_anybody() throws NoUserWithSuchUUIDException, FileNotFoundException, UnsupportedEncodingException {
-        return board.deletePlayer(null);
+        return board.deletePlayer(UUID.randomUUID());
     }
 
-    public void add_user(String name, Boolean change_name) throws PlayerExistsException, GameInProgressException, UnsupportedEncodingException, MaxPlayersReachedExeption, IOException {
+    public void add_user(String name, int no_of_user, Boolean change_name) throws PlayerExistsException, GameInProgressException, UnsupportedEncodingException, MaxPlayersReachedExeption, IOException {
         int before_player_count, after_player_count;
         if (change_name) {
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < no_of_user; i++) {
                 before_player_count = board.getData().getJSONArray("players").length();
                 board.registerPlayer(name + i);
                 after_player_count = board.getData().getJSONArray("players").length();
+                Assert.assertEquals(board.getData().getJSONArray("players").getJSONObject(i).getInt("position"), 0, "position of new player isnot 0");
+                Assert.assertEquals(board.getData().getJSONArray("players").getJSONObject(i).getString("name"), name + i, "name of the user registered is not same");
+
                 if (after_player_count < before_player_count) {
-                    Assert.assertTrue(false, "player count does not increase in JSON");
+                    Assert.fail("player count does not increase in JSON");
                 }
             }
         } else {
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < no_of_user; i++) {
                 before_player_count = board.getData().getJSONArray("players").length();
                 board.registerPlayer(name);
+                Assert.assertEquals(board.getData().getJSONArray("players").getJSONObject(i).getInt("position"), 0, "position of new player is not 0");
+                Assert.assertEquals(board.getData().getJSONArray("players").getJSONObject(i).getString("name"), name, "name of the user registered is not same");
+
                 after_player_count = board.getData().getJSONArray("players").length();
                 if (after_player_count < before_player_count) {
-                    Assert.assertTrue(false, "player count does not increase in JSON");
+                    Assert.fail("player count does not increase in JSON");
                 }
             }
         }
@@ -66,14 +73,61 @@ public class BoardTest {
     public void add_more_than_four_user() throws PlayerExistsException, GameInProgressException, UnsupportedEncodingException, MaxPlayersReachedExeption, IOException {
 
         String name = "any_name";
-        add_user(name, Boolean.TRUE);
+        add_user(name, 6, Boolean.TRUE);
 
     }
 
     public void add_same_name_user() throws PlayerExistsException, GameInProgressException, UnsupportedEncodingException, MaxPlayersReachedExeption, IOException {
 
         String name = "any_name";
-        add_user(name, Boolean.FALSE);
+        add_user(name, 5, Boolean.FALSE);
     }
 
+    public void register_user_after_starting_game() {
+        String name = "any_name";
+        UUID uid;
+        try {
+
+            add_user(name, 2, Boolean.TRUE);
+            for (int i = 0; i < 2; i++) {
+
+                uid = (UUID) board.getData().getJSONArray("players").getJSONObject(i).get("uuid");
+                board.rollDice(uid);
+                board.registerPlayer("player");
+
+            }
+        } catch (Exception e) {
+            Assert.assertEquals(e.getClass(), new GameInProgressException().getClass());
+        }
+    }
+
+    public void delete_user_which_does_not_exist() {
+        String name = "any_name";
+        UUID uid;
+        try {
+
+            add_user(name, 4, Boolean.TRUE);
+            uid = UUID.randomUUID();
+            board.deletePlayer(uid);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            Assert.assertEquals(e.getClass(), new NoUserWithSuchUUIDException("any uid").getClass());
+        }
+    }
+
+    public void check_user_is_deleted() {
+        String name = "any_name";
+        UUID uid;
+        try {
+            add_user(name, 4, Boolean.TRUE);
+            uid = (UUID) board.getData().getJSONArray("players").getJSONObject(0).get("uuid");
+            board.deletePlayer(uid);
+            Assert.assertEquals(board.getData().getJSONArray("players").length(), 3);
+            board.deletePlayer(uid);
+
+        } catch (Exception e) {
+            Assert.assertEquals(e.getClass(), new NoUserWithSuchUUIDException("any uid").getClass());
+        }
+    }
 }

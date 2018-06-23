@@ -99,8 +99,7 @@ public class Board {
         Boolean response = false;
         for(int i = 0; i < data.getJSONArray("players").length(); i++){
             JSONObject player = data.getJSONArray("players").getJSONObject(i);
-            
-            if(player.getString("uuid").equals(playerUuid.toString())){
+            if(player.get("uuid").equals(playerUuid)){
                 data.getJSONArray("players").remove(i);
                 data.put("turn", 0);
                 BoardModel.save(uuid, data);
@@ -108,8 +107,11 @@ public class Board {
             }
         }
         if(!response){
+            
             throw new NoUserWithSuchUUIDException(playerUuid.toString());
+
         }
+
         return data.getJSONArray("players");
     }
     
@@ -171,11 +173,11 @@ public class Board {
      * pretty print the UUID of board
      * @return UUID of board as String
      */
-    @Override
-    public String toString(){
-        return "UUID:" + uuid.toString() + "\n" + data.toString();
-    }
-    
+//    @Override
+//    public String toString(){
+//        return "UUID:" + uuid.toString() + "\n" + data.toString();
+//    }
+//    
     /**
      * return complete board data in JSON with turn, players list and steps
      * @return JSONObject board data containing steps, players and turn
