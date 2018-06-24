@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import Keyword.BoardTest;
 import com.qainfotech.tap.training.snl.api.GameInProgressException;
 import com.qainfotech.tap.training.snl.api.InvalidTurnException;
 import com.qainfotech.tap.training.snl.api.MaxPlayersReachedExeption;
