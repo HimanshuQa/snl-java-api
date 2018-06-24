@@ -65,6 +65,16 @@ public class Alltest {
         boardtest.check_user_is_deleted();
     }
     
+    @Test
+    public void test_check_correct_turn(){
+        boardtest.Wrong_turn_of_user();
+    }
+    
+    @Test
+    public void test_check_player_position_moved_or_not_after_dice_is_rolled(){
+        boardtest.check_player_position_moved_or_not_after_dice_is_rolled();
+    }
+    
     @AfterMethod
     public void teardown() {
         boardtest = null;

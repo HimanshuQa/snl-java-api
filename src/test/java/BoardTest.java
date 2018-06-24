@@ -111,7 +111,6 @@ public class BoardTest {
             board.deletePlayer(uid);
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             Assert.assertEquals(e.getClass(), new NoUserWithSuchUUIDException("any uid").getClass());
         }
     }
@@ -128,6 +127,37 @@ public class BoardTest {
 
         } catch (Exception e) {
             Assert.assertEquals(e.getClass(), new NoUserWithSuchUUIDException("any uid").getClass());
+        }
+    }
+
+    public void Wrong_turn_of_user() {
+        String name = "any_name";
+        UUID uid = null;
+        try {
+            add_user(name, 4, Boolean.TRUE);
+            //getting the uuid of second player instead of first player
+            uid = (UUID) board.getData().getJSONArray("players").getJSONObject(1).get("uuid");
+            board.rollDice(uid);
+
+        } catch (Exception e) {
+            Assert.assertEquals(e.getClass(), new InvalidTurnException(uid).getClass());
+        }
+    }
+
+    public void check_player_position_moved_or_not_after_dice_is_rolled() {
+        String name = "any_name";
+        UUID uid = null;
+        try {
+            add_user(name, 4, Boolean.TRUE);
+            int before_pos = board.getData().getJSONArray("players").getJSONObject(0).getInt("position");
+            uid = (UUID) board.getData().getJSONArray("players").getJSONObject(0).get("uuid");
+            int dice = board.rollDice(uid).getInt("dice");
+            Assert.assertEquals(board.getData().getInt("turn"), 1, "Turn is not updated");
+            int after_pos = board.getData().getJSONArray("players").getJSONObject(0).getInt("position");
+            Assert.assertEquals(after_pos, before_pos + dice, "Positon of player is not what is need to be");
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 }
